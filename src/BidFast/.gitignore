@@ -1,0 +1,12 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio cache/options directory
+.vs/
+
+# MSTest test results
+[Tt]est[Rr]esult*/
+
+# BidFast generated files
+SampleXml/Output/*.gen.cs
