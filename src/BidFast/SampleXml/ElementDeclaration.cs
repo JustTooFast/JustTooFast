@@ -18,7 +18,13 @@ using System.Text;
 namespace JustTooFast.SampleXml;
 public partial class ElementDeclaration
 {
-    public partial string Generate()
+    private partial void Validate()
+    {
+        if (string.IsNullOrWhiteSpace(m_Element.Name))
+            throw new Exception("Element Name is required.");
+    }
+
+    public string Generate()
     {
         StringBuilder sb = new();
 

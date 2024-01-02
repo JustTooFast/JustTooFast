@@ -1,4 +1,4 @@
-﻿// Copyright 2023 Matthew Yancer
+// Copyright 2023 Matthew Yancer
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,25 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
-namespace JustTooFast.SampleXml;
-public partial class AttributeDeclaration
+namespace JustTooFast.Xml;
+public partial class XmlFileBuilder
 {
-    private partial void Validate()
+    public static implicit operator XmlFileGenerator(XmlFileBuilder builder)
     {
-        if (string.IsNullOrWhiteSpace(m_Attribute.Name))
-            throw new Exception("Attribute Name is required.");
+        return new XmlFileGenerator(builder.m_XmlFile);
     }
 
-    public string Generate()
+    public XmlFileBuilder WithDisableProlog(bool disableProlog)
     {
-        string result = string.Empty;
-        if (string.IsNullOrWhiteSpace(m_Attribute.Value))
-            result = $"{m_Attribute.Name}=\"\"";
-        else
-            result = $"{m_Attribute.Name}=\"{m_Attribute.Value}\"";
-        
-        return result;
+        m_XmlFile.DisableProlog = disableProlog;
+
+        return this;
+    }
+
+    public XmlFileBuilder AsDisableProlog()
+    {
+        return WithDisableProlog(true);
     }
 }

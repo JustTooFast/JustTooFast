@@ -12,39 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace JustTooFast.BidFast.Tests;
+namespace JustTooFast.Xml.Tests;
 
 [TestClass]
-public class DeclarationGeneratorTest
+public class XmlFileBuilderExTest
 {
     [TestMethod]
-    public void Generate_WithBasicStructure_ReturnStructure()
+    public void Generate_WithRootElement_ReturnWithRootElement()
     {
         //Arrange
-        BidEntity entity = new() { Name = "Test" };
-        string targetNamespace = "MyNamespace";
-
+        XmlFileBuilder target = new XmlFileBuilder()
+            .WithRootElement(x => x
+                .WithName("catalog"));
+        
         string expected =
-@"using System;
-
-namespace MyNamespace;
-public partial class TestDeclaration
-{
-    private readonly TestInfo m_Test;
-
-    public TestDeclaration(TestInfo test)
-    {
-        m_Test = test ?? throw new ArgumentNullException(nameof(test));
-
-        Validate();
-    }
-
-    private partial void Validate();
-}
-";
+@"<?xml version=""1.0""?>
+<catalog></catalog>";
 
         //Act
-        IGenerator target = new DeclarationGenerator(entity, targetNamespace);
         string actual = target.Generate();
 
         //Assert

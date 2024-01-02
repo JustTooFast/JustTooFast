@@ -14,54 +14,56 @@
 
 using System;
 
-namespace JustTooFast.SampleXml.Tests;
+namespace JustTooFast.Xml.Tests;
 
 [TestClass]
 public class AttributeDeclarationTest
 {
     [TestMethod]
-    public void Generate_WithName_ReturnNameAndEmptyValue()
+    public void AppendDeclaration_WithName_ReturnNameAndEmptyValue()
     {
         //Arrange
         AttributeBuilder builder = new AttributeBuilder()
-            .WithName("test");
+            .WithName("id");
         
-        string expected = "test=\"\"";
+        string expected = "id=\"\"";
 
         //Act
-        AttributeDeclaration target = new(builder);
-        string actual = target.Generate();
+        AttributeDeclaration target = new(builder, new Appender());
+        target.AppendDeclaration();
+        string actual = target.ToString();
 
         //Assert
         Assert.AreEqual(expected, actual);
     }
 
     [TestMethod]
-    public void Generate_WithNameAndValue_ReturnNameAndValue()
+    public void AppendDeclaration_WithNameAndValue_ReturnNameAndValue()
     {
         //Arrange
         AttributeBuilder builder = new AttributeBuilder()
-            .WithName("myName")
-            .WithValue("myValue");
+            .WithName("id")
+            .WithValue("bk101");
         
-        string expected = "myName=\"myValue\"";
+        string expected = "id=\"bk101\"";
 
         //Act
-        AttributeDeclaration target = new(builder);
-        string actual = target.Generate();
+        AttributeDeclaration target = new(builder, new Appender());
+        target.AppendDeclaration();
+        string actual = target.ToString();
 
         //Assert
         Assert.AreEqual(expected, actual);
     }
 
     [TestMethod]
-    [ExpectedException(typeof(Exception))]   //Assert
+    [ExpectedException(typeof(XmlFormatException))]   //Assert
     public void Validate_MissingName_ThrowException()
     {
         //Arrange
         AttributeBuilder builder = new();
 
         //Act
-        AttributeDeclaration target = new(builder);
+        AttributeDeclaration target = new(builder, new Appender());
     }
 }

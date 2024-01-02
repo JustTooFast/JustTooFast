@@ -1,4 +1,4 @@
-﻿// Copyright 2023 Matthew Yancer
+// Copyright 2023 Matthew Yancer
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,25 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
+using System.Reflection.Metadata.Ecma335;
 
-namespace JustTooFast.SampleXml;
-public partial class AttributeDeclaration
+namespace JustTooFast.Xml;
+public partial class AttributeDeclaration : DeclarationBase
 {
+    public AttributeDeclaration(AttributeInfo attribute, IAppender appender)
+        : this(attribute)
+    {
+        Appender = appender;
+    }
+
     private partial void Validate()
     {
         if (string.IsNullOrWhiteSpace(m_Attribute.Name))
-            throw new Exception("Attribute Name is required.");
+            throw new XmlFormatException("Attribute Name is required.");
     }
 
-    public string Generate()
+    public override void AppendDeclaration()
     {
-        string result = string.Empty;
-        if (string.IsNullOrWhiteSpace(m_Attribute.Value))
-            result = $"{m_Attribute.Name}=\"\"";
-        else
-            result = $"{m_Attribute.Name}=\"{m_Attribute.Value}\"";
-        
-        return result;
+        Appender.Append($"{m_Attribute.Name}=\"");
+
+        if (!string.IsNullOrWhiteSpace(m_Attribute.Value))
+            Appender.Append(m_Attribute.Value);
+
+        Appender.Append('\"');
     }
 }

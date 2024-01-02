@@ -1,4 +1,4 @@
-﻿// Copyright 2023 Matthew Yancer
+// Copyright 2023 Matthew Yancer
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,23 +14,21 @@
 
 using System;
 
-namespace JustTooFast.SampleXml;
-public partial class AttributeDeclaration
+namespace JustTooFast.Xml;
+public class XmlSnippetGenerator : IGenerator
 {
-    private partial void Validate()
+    private readonly XmlSnippetInfo m_XmlSnippet;
+
+    public XmlSnippetGenerator(XmlSnippetInfo xmlSnippet)
     {
-        if (string.IsNullOrWhiteSpace(m_Attribute.Name))
-            throw new Exception("Attribute Name is required.");
+        m_XmlSnippet = xmlSnippet ?? throw new ArgumentNullException(nameof(xmlSnippet));
     }
 
     public string Generate()
     {
-        string result = string.Empty;
-        if (string.IsNullOrWhiteSpace(m_Attribute.Value))
-            result = $"{m_Attribute.Name}=\"\"";
-        else
-            result = $"{m_Attribute.Name}=\"{m_Attribute.Value}\"";
-        
-        return result;
+        XmlSnippetDeclaration xmlSnippetDeclaration = new(m_XmlSnippet, new Appender());
+        xmlSnippetDeclaration.AppendDeclaration();
+
+        return xmlSnippetDeclaration.ToString();
     }
 }

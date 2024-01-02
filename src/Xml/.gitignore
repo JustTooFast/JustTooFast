@@ -10,4 +10,4 @@
 [Tt]est[Rr]esult*/
 
 # BidFast generated files
-SampleXml/Output/*.gen.cs
+Xml/Output/*.gen.cs

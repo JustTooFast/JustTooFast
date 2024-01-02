@@ -1,4 +1,4 @@
-﻿// Copyright 2023 Matthew Yancer
+// Copyright 2023 Matthew Yancer
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,23 +14,30 @@
 
 using System;
 
-namespace JustTooFast.SampleXml;
-public partial class AttributeDeclaration
+namespace JustTooFast.Xml;
+public abstract class DeclarationBase
 {
-    private partial void Validate()
+    private IAppender m_Appender;
+
+    public IAppender Appender
     {
-        if (string.IsNullOrWhiteSpace(m_Attribute.Name))
-            throw new Exception("Attribute Name is required.");
+        protected get
+        {
+            if (m_Appender == null)
+                throw new Exception("Appender is not initialized.");
+            else
+                return m_Appender;
+        }
+        set
+        {
+            m_Appender = value;
+        }
     }
 
-    public string Generate()
+    public abstract void AppendDeclaration();
+
+    public override string ToString()
     {
-        string result = string.Empty;
-        if (string.IsNullOrWhiteSpace(m_Attribute.Value))
-            result = $"{m_Attribute.Name}=\"\"";
-        else
-            result = $"{m_Attribute.Name}=\"{m_Attribute.Value}\"";
-        
-        return result;
+        return m_Appender.ToString();
     }
 }

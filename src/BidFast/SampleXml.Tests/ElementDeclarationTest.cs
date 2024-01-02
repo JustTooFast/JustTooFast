@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+using System;
 using System.Text;
 
 namespace JustTooFast.SampleXml.Tests;
@@ -181,5 +182,16 @@ public class ElementDeclarationTest
 
         //Assert
         Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(Exception))]   //Assert
+    public void Validate_MissingName_ThrowException()
+    {
+        //Arrange
+        ElementBuilder builder = new();
+
+        //Act
+        ElementDeclaration target = new(builder);
     }
 }

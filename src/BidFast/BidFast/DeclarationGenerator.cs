@@ -66,12 +66,14 @@ public class DeclarationGenerator : IGenerator
         sb.AppendLineFeed($"    public {m_Entity.Name}Declaration({m_Entity.Name}Info {camelCaseName})")
             .AppendLineFeed("    {")
             .AppendLineFeed($"        m_{m_Entity.Name} = {camelCaseName} ?? throw new ArgumentNullException(nameof({camelCaseName}));")
+            .AppendLineFeed()
+            .AppendLineFeed("        Validate();")
             .AppendLineFeed("    }");
 
         sb.AppendLineFeed();
 
-        //Add generate method stub
-        sb.AppendLineFeed("    public partial string Generate();");
+        //Add validate method stub
+        sb.AppendLineFeed("    private partial void Validate();");
 
         //Close class
         sb.AppendLineFeed("}");

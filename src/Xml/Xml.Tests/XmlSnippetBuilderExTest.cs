@@ -12,39 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-namespace JustTooFast.BidFast.Tests;
+namespace JustTooFast.Xml.Tests;
 
 [TestClass]
-public class DeclarationGeneratorTest
+public class XmlSnippetBuilderExTest
 {
     [TestMethod]
-    public void Generate_WithBasicStructure_ReturnStructure()
+    public void Generate_WithElement_ReturnWithElement()
     {
         //Arrange
-        BidEntity entity = new() { Name = "Test" };
-        string targetNamespace = "MyNamespace";
-
-        string expected =
-@"using System;
-
-namespace MyNamespace;
-public partial class TestDeclaration
-{
-    private readonly TestInfo m_Test;
-
-    public TestDeclaration(TestInfo test)
-    {
-        m_Test = test ?? throw new ArgumentNullException(nameof(test));
-
-        Validate();
-    }
-
-    private partial void Validate();
-}
-";
+        XmlSnippetBuilder target = new XmlSnippetBuilder()
+            .WithElement(x => x
+                .WithName("book"));
+        
+        string expected = "<book></book>";
 
         //Act
-        IGenerator target = new DeclarationGenerator(entity, targetNamespace);
         string actual = target.Generate();
 
         //Assert

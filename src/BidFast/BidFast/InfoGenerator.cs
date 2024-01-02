@@ -54,7 +54,7 @@ public class InfoGenerator : IGenerator
 
         //Add namespace and class
         sb.AppendLineFeed($"namespace {m_TargetNamespace};")
-            .AppendLineFeed($"public class {m_Entity.Name}Info")
+            .AppendLineFeed($"public partial class {m_Entity.Name}Info")
             .AppendLineFeed("{");
 
        bool isFirstElement = true;

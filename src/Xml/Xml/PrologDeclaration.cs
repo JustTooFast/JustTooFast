@@ -1,4 +1,4 @@
-﻿// Copyright 2023 Matthew Yancer
+// Copyright 2024 Matthew Yancer
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,25 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-using System;
-
-namespace JustTooFast.SampleXml;
-public partial class AttributeDeclaration
+namespace JustTooFast.Xml;
+public partial class PrologDeclaration : DeclarationBase
 {
-    private partial void Validate()
+    public PrologDeclaration(PrologInfo prolog, IAppender appender)
+        : this(prolog)
     {
-        if (string.IsNullOrWhiteSpace(m_Attribute.Name))
-            throw new Exception("Attribute Name is required.");
+        Appender = appender;
     }
 
-    public string Generate()
+    private partial void Validate()
     {
-        string result = string.Empty;
-        if (string.IsNullOrWhiteSpace(m_Attribute.Value))
-            result = $"{m_Attribute.Name}=\"\"";
-        else
-            result = $"{m_Attribute.Name}=\"{m_Attribute.Value}\"";
-        
-        return result;
+        //Ensure Xml is initialized
+        m_Prolog.Xml ??= new XmlInfo();
+    }
+    
+    public override void AppendDeclaration()
+    {
+        XmlDeclaration xmlDeclaration = new(m_Prolog.Xml, Appender);
+        xmlDeclaration.AppendDeclaration();
     }
 }

@@ -29,7 +29,7 @@ public class InfoGeneratorTest
 @"using System.Collections.Generic;
 
 namespace MyNamespace;
-public class TestInfo
+public partial class TestInfo
 {
     public string Item1
     { get; set; }
@@ -62,7 +62,7 @@ public class TestInfo
 @"using System.Collections.Generic;
 
 namespace MyNamespace;
-public class TestInfo
+public partial class TestInfo
 {
     public Item1Info Item1
     { get; set; }
@@ -95,7 +95,7 @@ public class TestInfo
 @"using System.Collections.Generic;
 
 namespace MyNamespace;
-public class TestInfo
+public partial class TestInfo
 {
     private readonly List<string> m_Item1s = new();
     private readonly List<string> m_Item2s = new();
@@ -138,7 +138,7 @@ public class TestInfo
 @"using System.Collections.Generic;
 
 namespace MyNamespace;
-public class TestInfo
+public partial class TestInfo
 {
     private readonly List<Item1Info> m_Item1s = new();
     private readonly List<Item2Info> m_Item2s = new();
@@ -184,7 +184,7 @@ public class TestInfo
 @"using System.Collections.Generic;
 
 namespace MyNamespace;
-public class Test2Info
+public partial class Test2Info
 {
     private readonly List<string> m_Item3s = new();
     private readonly List<Item4Info> m_Item4s = new();
